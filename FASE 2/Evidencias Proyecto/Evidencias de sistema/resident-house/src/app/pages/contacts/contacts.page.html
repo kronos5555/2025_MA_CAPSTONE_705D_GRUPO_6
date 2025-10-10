@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contactos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="contacts-container">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner></ion-spinner>
+      <p>Cargando contactos...</p>
+    </div>
+
+    <!-- Lista de contactos -->
+    <ion-list *ngIf="!loading && contacts.length > 0">
+      <ion-item 
+        *ngFor="let contact of contacts" 
+        (click)="openChat(contact)"
+        button
+        detail>
+        <ion-avatar slot="start">
+          <img [src]="contact.photoURL || 'https://ionicframework.com/docs/img/demos/avatar.svg'" 
+               [alt]="contact.displayName">
+        </ion-avatar>
+        <ion-label>
+          <h2>{{ contact.displayName }}</h2>
+          <p>{{ contact.email }}</p>
+          <p class="role-badge" [class.conserje]="contact.role === 'conserje'">
+            {{ contact.role === 'resident' ? 'Residente' : 'Conserje' }}
+            <span *ngIf="contact.apartmentNumber"> - Apt. {{ contact.apartmentNumber }}</span>
+          </p>
+        </ion-label>
+        <ion-badge 
+          slot="end" 
+          [color]="contact.isOnline ? 'success' : 'medium'">
+          {{ contact.isOnline ? 'En línea' : 'Offline' }}
+        </ion-badge>
+      </ion-item>
+    </ion-list>
+
+    <!-- Sin contactos -->
+    <div *ngIf="!loading && contacts.length === 0" class="empty-state">
+      <ion-icon name="people-outline" class="empty-icon"></ion-icon>
+      <h2>No hay contactos disponibles</h2>
+      <p>Aún no hay otros usuarios registrados</p>
+    </div>
+  </div>
+</ion-content>

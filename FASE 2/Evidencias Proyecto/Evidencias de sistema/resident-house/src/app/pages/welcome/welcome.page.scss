@@ -1,0 +1,52 @@
+.welcome-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.logo-section {
+  margin-bottom: 60px;
+
+  .logo-icon {
+    font-size: 120px;
+    color: var(--ion-color-primary);
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 32px;
+    font-weight: bold;
+    color: var(--ion-color-primary);
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: 18px;
+    color: var(--ion-color-medium);
+    margin-top: 10px;
+  }
+}
+
+.buttons-section {
+  width: 100%;
+  max-width: 400px;
+  padding: 0 20px;
+
+  ion-button {
+    margin-bottom: 16px;
+    height: 56px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .resident-btn {
+    --background: var(--ion-color-primary);
+  }
+
+  .conserje-btn {
+    --background: var(--ion-color-secondary);
+  }
+}

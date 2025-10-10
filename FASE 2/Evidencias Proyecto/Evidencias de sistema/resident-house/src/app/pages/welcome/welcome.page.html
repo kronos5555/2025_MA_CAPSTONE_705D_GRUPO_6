@@ -1,0 +1,21 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="welcome-container">
+    <div class="logo-section">
+      <ion-icon name="home" class="logo-icon"></ion-icon>
+      <h1>RESIDENT HOUSE</h1>
+      <p class="subtitle">Bienvenido</p>
+    </div>
+
+    <div class="buttons-section">
+      <ion-button expand="block" (click)="goToLogin('resident')" class="resident-btn">
+        <ion-icon name="person" slot="start"></ion-icon>
+        Soy Residente
+      </ion-button>
+
+      <ion-button expand="block" (click)="goToLogin('conserje')" class="conserje-btn">
+        <ion-icon name="shield-checkmark" slot="start"></ion-icon>
+        Soy Conserje
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mi Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="profile-container" *ngIf="user">
+    <!-- Foto de perfil -->
+    <div class="profile-header">
+      <div class="profile-avatar-large">
+        <img [src]="user.photoURL || 'assets/icon/icono.png'" alt="Profile">
+      </div>
+      <ion-button fill="clear" size="small" (click)="changePhoto()">
+        <ion-icon name="camera" slot="start"></ion-icon>
+        Cambiar foto
+      </ion-button>
+    </div>
+
+    <!-- Información del usuario -->
+    <div class="profile-info">
+      <ion-list>
+        <ion-item>
+          <ion-icon name="person" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Nombre</h3>
+            <p>{{ user.displayName }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="mail" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Email</h3>
+            <p>{{ user.email }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item *ngIf="user.apartmentNumber && user.role === 'resident'">
+          <ion-icon name="home" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Apartamento</h3>
+            <p>{{ user.apartmentNumber }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon name="shield-checkmark" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Rol</h3>
+            <p>{{ user.role === 'resident' ? 'Residente' : 'Conserje' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-button expand="block" (click)="editProfile()" class="edit-btn">
+        <ion-icon name="create" slot="start"></ion-icon>
+        Editar Perfil
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

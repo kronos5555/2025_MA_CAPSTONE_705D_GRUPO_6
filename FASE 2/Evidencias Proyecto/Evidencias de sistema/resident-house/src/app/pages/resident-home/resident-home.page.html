@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Resident House</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">
+        <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="home-container">
+    <!-- Perfil del usuario -->
+    <div class="profile-section" (click)="goToProfile()">
+      <div class="profile-avatar">
+        <img [src]="user?.photoURL || 'assets/icon/icono.png'" alt="Profile">
+      </div>
+      <div class="profile-info">
+        <h2>{{ user?.displayName }}</h2>
+        <p>{{ user?.email }}</p>
+        <p class="apartment" *ngIf="user?.apartmentNumber">
+          Apartamento: {{ user?.apartmentNumber }}
+        </p>
+      </div>
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </div>
+
+    <!-- Opciones del menú -->
+    <div class="menu-options">
+      <ion-card (click)="goToContacts()" class="menu-card">
+        <ion-card-content>
+          <ion-icon name="chatbubbles" class="menu-icon"></ion-icon>
+          <h3>Contactos</h3>
+          <p>Chatea con residentes y conserje</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card (click)="goToAnuncios()" class="menu-card">
+        <ion-card-content>
+          <ion-icon name="megaphone" class="menu-icon"></ion-icon>
+          <h3>Anuncios</h3>
+          <p>Ver y publicar anuncios</p>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>

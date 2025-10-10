@@ -1,0 +1,90 @@
+.contacts-container {
+  height: 100%;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  
+  ion-spinner {
+    margin-bottom: 16px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+  }
+}
+
+ion-list {
+  background: transparent;
+  padding: 8px;
+  
+  ion-item {
+    --background: var(--ion-color-light);
+    margin-bottom: 8px;
+    border-radius: 12px;
+    
+    ion-avatar {
+      width: 50px;
+      height: 50px;
+    }
+    
+    ion-label {
+      h2 {
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 4px;
+      }
+      
+      p {
+        font-size: 13px;
+        color: var(--ion-color-medium);
+        margin: 2px 0;
+      }
+      
+      .role-badge {
+        font-size: 12px;
+        color: var(--ion-color-primary);
+        font-weight: 500;
+        
+        &.conserje {
+          color: var(--ion-color-secondary);
+        }
+      }
+    }
+    
+    ion-badge {
+      font-size: 11px;
+      padding: 4px 8px;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+  text-align: center;
+  padding: 24px;
+  
+  .empty-icon {
+    font-size: 100px;
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+    opacity: 0.5;
+  }
+  
+  h2 {
+    color: var(--ion-color-dark);
+    margin-bottom: 8px;
+  }
+  
+  p {
+    color: var(--ion-color-medium);
+  }
+}

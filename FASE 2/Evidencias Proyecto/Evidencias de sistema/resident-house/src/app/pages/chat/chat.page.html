@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/contacts"></ion-back-button>
+    </ion-buttons>
+    <ion-title *ngIf="otherUser">
+      <div class="chat-header">
+        <ion-avatar class="header-avatar">
+          <img [src]="otherUser.photoURL || 'https://ionicframework.com/docs/img/demos/avatar.svg'" 
+               [alt]="otherUser.displayName">
+        </ion-avatar>
+        <div class="header-info">
+          <h3>{{ otherUser.displayName }}</h3>
+          <p class="online-status" [class.online]="otherUser.isOnline">
+            {{ otherUser.isOnline ? 'En línea' : 'Desconectado' }}
+          </p>
+        </div>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" #content>
+  <div class="chat-container">
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="!loading" class="messages-container">
+      <div *ngFor="let message of messages" 
+           class="message-wrapper"
+           [class.sent]="message.senderId === currentUserId"
+           [class.received]="message.senderId !== currentUserId">
+        <div class="message-bubble">
+          <p class="message-text">{{ message.text }}</p>
+          <span class="message-time">
+            {{ message.createdAt | date:'shortTime' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Sin mensajes -->
+      <div *ngIf="messages.length === 0" class="empty-messages">
+        <ion-icon name="chatbubbles-outline"></ion-icon>
+        <p>No hay mensajes aún</p>
+        <p class="subtitle">Envía el primer mensaje</p>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="message-input-container">
+      <ion-textarea
+        [(ngModel)]="newMessage"
+        placeholder="Escribe un mensaje..."
+        [autoGrow]="true"
+        rows="1"
+        (keyup.enter)="sendMessage()">
+      </ion-textarea>
+      <ion-button 
+        (click)="sendMessage()" 
+        [disabled]="!newMessage.trim() || sending"
+        fill="clear"
+        class="send-button">
+        <ion-icon name="send" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
