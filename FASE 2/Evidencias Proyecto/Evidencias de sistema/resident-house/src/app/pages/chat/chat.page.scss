@@ -17,6 +17,7 @@ ion-content {
       margin: 0;
       font-size: 16px;
       font-weight: 600;
+      color: var(--ion-color-dark);
     }
 
     .online-status {
@@ -46,19 +47,20 @@ ion-content {
 .messages-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   padding-bottom: 16px;
+  min-height: 100%;
 }
 
 .message-wrapper {
   display: flex;
-  margin-bottom: 8px;
+  width: 100%;
 
   &.sent {
     justify-content: flex-end;
 
     .message-bubble {
-      background: #030701;
+      background: #dcf8c6;
       border-radius: 12px 12px 0 12px;
     }
   }
@@ -75,20 +77,21 @@ ion-content {
 
 .message-bubble {
   max-width: 70%;
-  padding: 8px 12px;
+  padding: 10px 14px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 
   .message-text {
-    margin: 0;
+    margin: 0 0 4px 0;
     font-size: 15px;
     line-height: 1.4;
     word-wrap: break-word;
+    color: #000000;
+    white-space: pre-wrap;
   }
 
   .message-time {
     font-size: 11px;
     color: rgba(0, 0, 0, 0.45);
-    margin-top: 4px;
     display: block;
     text-align: right;
   }
@@ -99,7 +102,7 @@ ion-content {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  height: 60vh;
   text-align: center;
   color: var(--ion-color-medium);
 
@@ -124,6 +127,8 @@ ion-footer {
     --background: white;
     --border-width: 1px 0 0 0;
     --border-color: var(--ion-color-light-shade);
+    --padding-top: 0;
+    --padding-bottom: 0;
   }
 }
 
@@ -140,8 +145,10 @@ ion-footer {
     --padding-end: 12px;
     --padding-top: 8px;
     --padding-bottom: 8px;
+    --color: var(--ion-color-dark);
     border-radius: 20px;
     font-size: 15px;
+    max-height: 120px;
   }
 
   .send-button {
@@ -149,9 +156,14 @@ ion-footer {
     margin: 0;
     height: 40px;
     width: 40px;
+    flex-shrink: 0;
 
     ion-icon {
       font-size: 24px;
+    }
+
+    &:disabled {
+      opacity: 0.4;
     }
   }
 }
