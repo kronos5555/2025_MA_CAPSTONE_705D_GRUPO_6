@@ -1,0 +1,205 @@
+.bitacora-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.filters-section {
+  padding: 16px;
+  background: var(--ion-color-light);
+
+  ion-segment {
+    margin-bottom: 12px;
+  }
+
+  ion-searchbar {
+    --background: white;
+  }
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+
+  p {
+    margin-top: 16px;
+    color: var(--ion-color-medium);
+  }
+}
+
+ion-list {
+  background: transparent;
+  padding: 8px;
+
+  ion-item-sliding {
+    margin-bottom: 12px;
+
+    ion-item {
+      --background: white;
+      --border-radius: 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+.entry-content {
+  width: 100%;
+  padding: 12px 0;
+
+  .entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+
+    ion-badge {
+      font-size: 12px;
+      padding: 4px 12px;
+    }
+  }
+
+  .entry-details {
+    p {
+      margin: 6px 0;
+      font-size: 14px;
+      color: var(--ion-color-dark);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      ion-icon {
+        color: var(--ion-color-primary);
+        font-size: 18px;
+      }
+
+      strong {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .entry-times {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--ion-color-light-shade);
+
+    p {
+      margin: 4px 0;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      ion-icon {
+        font-size: 16px;
+      }
+
+      &.time-entry ion-icon {
+        color: var(--ion-color-success);
+      }
+
+      &.time-exit ion-icon {
+        color: var(--ion-color-danger);
+      }
+    }
+  }
+
+  .notes {
+    margin-top: 12px;
+    padding: 8px;
+    background: var(--ion-color-light);
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    gap: 8px;
+
+    ion-icon {
+      color: var(--ion-color-medium);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  text-align: center;
+  padding: 24px;
+
+  ion-icon {
+    font-size: 100px;
+    color: var(--ion-color-medium);
+    opacity: 0.3;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: var(--ion-color-dark);
+  }
+
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+  }
+}
+
+// Modal styles
+ion-modal {
+  ion-item {
+    margin-bottom: 12px;
+    --background: transparent;
+  }
+
+  .save-button {
+    margin-top: 24px;
+    height: 48px;
+  }
+}
+
+ion-item {
+  --color: #000 !important; // fuerza el color del texto a negro
+  color: #000 !important;
+
+  ion-label, p, h2, span, strong {
+    color: #000 !important; // asegura que los textos sean visibles
+  }
+}
+// 🔧 Corrige visibilidad en el modal de registro
+ion-modal {
+  ion-item {
+    --background: transparent;
+    --color: #fff; // texto del input
+    color: #fff;
+
+    ion-label {
+      color: #fff !important; // etiquetas
+    }
+
+    ion-input,
+    ion-textarea {
+      color: #fff !important; // texto escrito
+      --color: #fff !important; // para compatibilidad con Ionic
+      --placeholder-color: #ccc !important; // texto guía (placeholder)
+    }
+  }
+
+  ion-button {
+    --color: #fff;
+  }
+}
