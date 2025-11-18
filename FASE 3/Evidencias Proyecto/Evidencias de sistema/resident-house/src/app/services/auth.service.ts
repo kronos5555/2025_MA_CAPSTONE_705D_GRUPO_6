@@ -1,16 +1,17 @@
 import { Injectable, inject } from '@angular/core';
-import { 
-  Auth, 
-  createUserWithEmailAndPassword, 
+import {
+  Auth,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   user,
-  updateProfile
+  updateProfile,
+  sendPasswordResetEmail
 } from '@angular/fire/auth';
-import { 
-  Firestore, 
-  doc, 
-  setDoc, 
+import {
+  Firestore,
+  doc,
+  setDoc,
   getDoc,
   updateDoc
 } from '@angular/fire/firestore';
@@ -22,7 +23,7 @@ import { User } from '../models/user.model';
 export class AuthService {
   private auth: Auth = inject(Auth);
   private firestore: Firestore = inject(Firestore);
-  
+
   user$ = user(this.auth);
 
   constructor() {}
@@ -37,7 +38,7 @@ export class AuthService {
       // Crear usuario en Authentication
       const credential = await createUserWithEmailAndPassword(this.auth, email, password);
       console.log('Usuario creado en Authentication:', credential.user.uid);
-      
+
       const uid = credential.user.uid;
 
       // Actualizar perfil de Firebase Auth
@@ -67,7 +68,7 @@ export class AuthService {
       // Guardar en Firestore
       const userRef = doc(this.firestore, 'users', uid);
       await setDoc(userRef, userDoc);
-      
+
       console.log('Usuario guardado en Firestore correctamente');
     } catch (error) {
       console.error('Error completo en registro:', error);
@@ -86,7 +87,7 @@ export class AuthService {
 
       // Obtener datos del usuario
       const userDoc = await getDoc(doc(this.firestore, 'users', uid));
-      
+
       if (!userDoc.exists()) {
         throw new Error('Usuario no encontrado en la base de datos');
       }
@@ -108,6 +109,14 @@ export class AuthService {
       await signOut(this.auth);
     } catch (error) {
       console.error('Error en logout:', error);
+      throw error;
+    }
+  }
+    async resetPassword(email: string): Promise<void> {
+    try {
+      await sendPasswordResetEmail(this.auth, email);
+    } catch (error) {
+      console.error('Error enviando correo de recuperación:', error);
       throw error;
     }
   }

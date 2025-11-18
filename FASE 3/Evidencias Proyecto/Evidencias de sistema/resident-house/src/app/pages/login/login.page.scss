@@ -50,4 +50,15 @@ form {
   ion-button {
     font-weight: 600;
   }
+
+  .forgot-link {
+  text-align: center;
+  margin-top: 8px;
+
+  ion-button {
+    font-size: 13px;
+    --padding-start: 0;
+    --padding-end: 0;
+  }
+}
 }
