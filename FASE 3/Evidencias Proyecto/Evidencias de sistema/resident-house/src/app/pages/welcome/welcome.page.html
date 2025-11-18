@@ -1,0 +1,83 @@
+<ion-content [fullscreen]="true" class="welcome-content">
+  <!-- Fondo con gradiente animado -->
+  <div class="animated-background"></div>
+
+  <!-- Contenido principal -->
+  <div class="welcome-container">
+    <!-- Logo y título -->
+    <div class="header-section">
+      <div class="logo-wrapper">
+        <div class="logo-circle">
+          <ion-icon name="home" class="logo-icon"></ion-icon>
+        </div>
+        <div class="logo-glow"></div>
+      </div>
+      
+      <h1 class="app-title">
+        <span class="title-resident">Comunnity</span>
+        <span class="title-house">HOUSE</span>
+      </h1>
+      
+      <p class="app-subtitle">Tu comunidad conectada</p>
+      
+      <div class="features-badges">
+        <span class="feature-badge">
+          <ion-icon name="chatbubbles"></ion-icon>
+          Chat en tiempo real
+        </span>
+        <span class="feature-badge">
+          <ion-icon name="megaphone"></ion-icon>
+          Anuncios
+        </span>
+        <span class="feature-badge">
+          <ion-icon name="shield-checkmark"></ion-icon>
+          Seguro
+        </span>
+      </div>
+    </div>
+
+    <!-- Botones de acceso -->
+    <div class="buttons-section">
+      <ion-button 
+        expand="block" 
+        (click)="goToLogin('resident')" 
+        class="access-button resident-button">
+        <div class="button-content">
+          <div class="button-icon-wrapper">
+            <ion-icon name="person"></ion-icon>
+          </div>
+          <div class="button-text">
+            <span class="button-title">Soy Residente</span>
+            <span class="button-subtitle">Accede a tu comunidad</span>
+          </div>
+          <ion-icon name="arrow-forward" class="button-arrow"></ion-icon>
+        </div>
+      </ion-button>
+
+      <ion-button 
+        expand="block" 
+        (click)="goToLogin('conserje')" 
+        class="access-button conserje-button">
+        <div class="button-content">
+          <div class="button-icon-wrapper">
+            <ion-icon name="shield-checkmark"></ion-icon>
+          </div>
+          <div class="button-text">
+            <span class="button-title">Soy Conserje</span>
+            <span class="button-subtitle">Panel de control</span>
+          </div>
+          <ion-icon name="arrow-forward" class="button-arrow"></ion-icon>
+        </div>
+      </ion-button>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer-section">
+      <p class="footer-text">
+        <ion-icon name="lock-closed"></ion-icon>
+        Conexión segura y encriptada
+      </p>
+      <p class="version">v1.0.0</p>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "resident-house",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

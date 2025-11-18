@@ -1,0 +1,201 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/conserje-home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro de Packetes</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button (click)="showAddModal()">
+        <ion-icon name="add-circle" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="packetes-container">
+    <!-- Filtros -->
+    <div class="filters-section">
+      <ion-segment [(ngModel)]="filterType" (ionChange)="filterPacketes()">
+        <ion-segment-button value="all">
+          <ion-label>Todos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="today">
+          <ion-label>Hoy</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="pending">
+          <ion-label>Pendientes</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-searchbar
+        [(ngModel)]="searchTerm"
+        (ionInput)="searchPacketes()"
+        placeholder="Buscar por destinatario o apartamento"
+        animated>
+      </ion-searchbar>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading-container">
+      <ion-spinner></ion-spinner>
+      <p>Cargando packetes...</p>
+    </div>
+
+    <!-- Lista de packetes -->
+    <ion-list *ngIf="!loading && filteredPacketes.length > 0">
+      <ion-item-sliding *ngFor="let pack of filteredPacketes">
+        <ion-item>
+          <div class="entry-content">
+            <div class="entry-header">
+              <h2>{{ pack.recipientName }}</h2>
+              <ion-badge [color]="pack.pickedUpTime ? 'medium' : 'warning'">
+                {{ pack.pickedUpTime ? 'Entregado' : 'Pendiente' }}
+              </ion-badge>
+            </div>
+
+            <div class="entry-details">
+              <p>
+                <ion-icon name="cube"></ion-icon>
+                <strong>Código/Tracking:</strong> {{ pack.trackingCode }}
+              </p>
+              <p>
+                <ion-icon name="home"></ion-icon>
+                <strong>Apartamento:</strong> {{ pack.apartment }}
+              </p>
+              <p *ngIf="pack.carrier">
+                <ion-icon name="person"></ion-icon>
+                <strong>Repartidor/Empresa:</strong> {{ pack.carrier }}
+              </p>
+              <p *ngIf="pack.storageLocation">
+                <ion-icon name="archive"></ion-icon>
+                <strong>Ubicación:</strong> {{ pack.storageLocation }}
+              </p>
+            </div>
+
+            <div class="entry-times">
+              <p class="time-entry">
+                <ion-icon name="log-in"></ion-icon>
+                <strong>Recibido:</strong> {{ pack.receivedTime | date:'short' }}
+              </p>
+              <p class="time-exit" *ngIf="pack.pickedUpTime">
+                <ion-icon name="log-out"></ion-icon>
+                <strong>Retirado:</strong> {{ pack.pickedUpTime | date:'short' }}
+              </p>
+            </div>
+
+            <p class="notes" *ngIf="pack.notes">
+              <ion-icon name="document-text"></ion-icon>
+              <strong>Notas:</strong> {{ pack.notes }}
+            </p>
+          </div>
+        </ion-item>
+
+        <ion-item-options side="end">
+          <ion-item-option
+            *ngIf="!pack.pickedUpTime"
+            color="success"
+            (click)="registerPickup(pack)">
+            <ion-icon name="log-out" slot="icon-only"></ion-icon>
+          </ion-item-option>
+          <ion-item-option color="danger" (click)="deletePackete(pack)">
+            <ion-icon name="trash" slot="icon-only"></ion-icon>
+          </ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
+
+    <!-- Sin registros -->
+    <div *ngIf="!loading && filteredPacketes.length === 0" class="empty-state">
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <h2>No hay packetes registrados</h2>
+      <p>{{ getEmptyMessage() }}</p>
+    </div>
+  </div>
+
+  <!-- Modal para agregar packete -->
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="closeModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Registrar Packete</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">Cancelar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <form (ngSubmit)="savePackete()">
+          <ion-item>
+            <ion-label position="floating">Nombre del Destinatario *</ion-label>
+            <ion-input
+              [(ngModel)]="newPackete.recipientName"
+              name="recipientName"
+              type="text"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Código/Tracking *</ion-label>
+            <ion-input
+              [(ngModel)]="newPackete.trackingCode"
+              name="trackingCode"
+              type="text"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Apartamento *</ion-label>
+            <ion-input
+              [(ngModel)]="newPackete.apartment"
+              name="apartment"
+              type="text"
+              required>
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Repartidor/Empresa</ion-label>
+            <ion-input
+              [(ngModel)]="newPackete.carrier"
+              name="carrier"
+              type="text">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Ubicación del Packete</ion-label>
+            <ion-input
+              [(ngModel)]="newPackete.storageLocation"
+              name="storageLocation"
+              type="text"
+              placeholder="Bodega, casillero, recepción, etc.">
+            </ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Notas Adicionales</ion-label>
+            <ion-textarea
+              [(ngModel)]="newPackete.notes"
+              name="notes"
+              rows="3">
+            </ion-textarea>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            [disabled]="saving"
+            class="save-button">
+            <ion-spinner *ngIf="saving" name="crescent"></ion-spinner>
+            <span *ngIf="!saving">Registrar Packete</span>
+          </ion-button>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

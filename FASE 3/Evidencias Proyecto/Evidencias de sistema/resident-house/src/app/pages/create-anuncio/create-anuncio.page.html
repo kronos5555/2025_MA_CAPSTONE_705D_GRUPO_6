@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="close" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Nuevo Anuncio</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="create-anuncio-container">
+    <form (ngSubmit)="publishAnuncio()">
+      <!-- Título -->
+      <ion-item>
+        <ion-label position="floating">Título del Anuncio *</ion-label>
+        <ion-input
+          [(ngModel)]="anuncio.title"
+          name="title"
+          type="text"
+          maxlength="100"
+          required>
+        </ion-input>
+      </ion-item>
+      <p class="char-count">{{ anuncio.title.length }}/100</p>
+
+      <!-- Descripción -->
+      <ion-item>
+        <ion-label position="floating">Descripción *</ion-label>
+        <ion-textarea
+          [(ngModel)]="anuncio.description"
+          name="description"
+          rows="6"
+          maxlength="500"
+          required>
+        </ion-textarea>
+      </ion-item>
+      <p class="char-count">{{ anuncio.description.length }}/500</p>
+
+      <!-- Categoría -->
+      <ion-item>
+        <ion-label>Categoría</ion-label>
+        <ion-select
+          [(ngModel)]="anuncio.category"
+          name="category"
+          placeholder="Selecciona una categoría">
+          <ion-select-option value="lost">Perdido</ion-select-option>
+          <ion-select-option value="found">Encontrado</ion-select-option>
+          <ion-select-option value="event">Evento</ion-select-option>
+          <ion-select-option value="announcement">Aviso General</ion-select-option>
+          <ion-select-option value="other">Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <!-- Imagen -->
+      <div class="image-section">
+        <h3>Imagen (Opcional)</h3>
+        
+        <!-- Preview de la imagen -->
+        <div *ngIf="imagePreview" class="image-preview">
+          <img [src]="imagePreview" alt="Preview">
+          <ion-button
+            fill="clear"
+            color="danger"
+            class="remove-image-btn"
+            (click)="removeImage()">
+            <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- Botón para seleccionar imagen -->
+        <ion-button
+          *ngIf="!imagePreview"
+          expand="block"
+          fill="outline"
+          (click)="selectImage()">
+          <ion-icon name="image" slot="start"></ion-icon>
+          Seleccionar Imagen
+        </ion-button>
+
+        <input
+          type="file"
+          #fileInput
+          accept="image/*"
+          style="display: none;"
+          (change)="onImageSelected($event)">
+      </div>
+
+      <!-- Indicador de carga -->
+      <div *ngIf="uploading" class="uploading-indicator">
+        <ion-spinner></ion-spinner>
+        <p>{{ uploadingMessage }}</p>
+      </div>
+
+      <!-- Botones -->
+      <div class="action-buttons">
+        <ion-button
+          expand="block"
+          type="submit"
+          [disabled]="!isFormValid() || uploading"
+          class="publish-btn">
+          <ion-icon name="send" slot="start"></ion-icon>
+          {{ uploading ? 'Publicando...' : 'Publicar Anuncio' }}
+        </ion-button>
+
+        <ion-button
+          expand="block"
+          fill="clear"
+          color="medium"
+          (click)="goBack()"
+          [disabled]="uploading">
+          Cancelar
+        </ion-button>
+      </div>
+    </form>
+  </div>
+</ion-content>
